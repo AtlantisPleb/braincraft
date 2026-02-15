@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "braincraft",
+	"version": "${version}",
+	"name": "BrainCraft",
+	"description": "A Fabric mod for programmatic, API-driven Minecraft automation and custom logic.",
+	"authors": ["BrainCraft"],
+	"contact": {
+		"homepage": "https://github.com/yourusername/BrainCraft",
+		"sources": "https://github.com/yourusername/BrainCraft"
+	},
+	"license": "MIT",
+	"icon": "assets/braincraft/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["com.braincraft.BrainCraftMod"],
+		"client": ["com.braincraft.BrainCraftModClient"]
+	},
+	"mixins": [
+		"braincraft.mixins.json",
+		{
+			"config": "braincraft.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.2",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

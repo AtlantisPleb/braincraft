@@ -1,0 +1,1 @@
+{"required":true,"package":"com.braincraft.mixin","compatibilityLevel":"JAVA_21","mixins":["BrainCraftMixin"],"injectors":{"defaultRequire":1},"overwrites":{"requireAnnotations":true}}
