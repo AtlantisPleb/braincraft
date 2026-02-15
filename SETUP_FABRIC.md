@@ -120,13 +120,13 @@ To install Fabric for normal play (and to drop your or others’ mods in):
    - If macOS blocks it: **System Settings → Privacy & Security → Open Anyway**.
    - Choose Minecraft version, click Install, keep “Create profile” checked.
 
-2. **Mods folder (macOS)**  
+2. **Mods folder (macOS)**
    Put mod JARs here:
    ```text
    ~/Library/Application Support/minecraft/mods
    ```
 
-3. **Fabric API**  
+3. **Fabric API**
    Many mods need [Fabric API](https://modrinth.com/mod/fabric-api). Download the JAR for your Minecraft version and put it in `mods/` as well.
 
 In the launcher, select the **Fabric** profile and play.

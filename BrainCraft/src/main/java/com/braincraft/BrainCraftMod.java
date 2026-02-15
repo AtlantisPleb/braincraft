@@ -1,5 +1,6 @@
 package com.braincraft;
 
+import com.braincraft.base.BaseGameplay;
 import com.braincraft.command.BrainCraftCommands;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -14,5 +15,6 @@ public class BrainCraftMod implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("BrainCraft initialized!");
 		BrainCraftCommands.register();
+		BaseGameplay.register();
 	}
 }

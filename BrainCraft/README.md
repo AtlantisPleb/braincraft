@@ -35,6 +35,21 @@ Or download [Adoptium Temurin 21](https://adoptium.net/temurin/releases/) for ma
 
 Output JAR: `build/libs/braincraft-1.0.0.jar`
 
+## Flat world
+
+To play on a **completely flat** grass world:
+
+1. **Create New World** → **More World Options** → **World Type: Superflat**.
+2. Click **Customize** → under **Preset**, choose **BrainCraft Flat (Grass)** (or type `braincraft:grass_flat`).
+3. Create the world. The ground will be grass with dirt and stone below.
+
+## Base (Phase 1)
+
+- **`/braincraft base set`** — Builds your base where you stand: a **stone room** (floor, walls, roof) and **grass** in the surrounding area. Blocks inside the base are unbreakable.
+- **`/braincraft base show`** — Show your base position.
+- **`/braincraft base clear`** — Remove your base (in-memory; blocks stay).
+- When you stand inside your base, the action bar shows **Your base**. On death you respawn inside your base.
+
 ## Project layout
 
 | Path | Purpose |
