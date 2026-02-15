@@ -49,11 +49,11 @@ public final class BaseBuilder {
 			}
 		}
 
-		// 4. Two torches on inside walls (west and east) for light
+		// 4. Two wall torches (one block up on west and east walls) for light
 		BlockState torchWest = Blocks.WALL_TORCH.defaultBlockState().setValue(WallTorchBlock.FACING, Direction.WEST);
 		BlockState torchEast = Blocks.WALL_TORCH.defaultBlockState().setValue(WallTorchBlock.FACING, Direction.EAST);
-		level.setBlock(new BlockPos(cx - radius + 1, cy, cz), torchWest, 3);
-		level.setBlock(new BlockPos(cx + radius - 1, cy, cz), torchEast, 3);
+		level.setBlock(new BlockPos(cx - radius + 1, cy + 1, cz), torchWest, 3);
+		level.setBlock(new BlockPos(cx + radius - 1, cy + 1, cz), torchEast, 3);
 
 		// 5. Surroundings: grass (and dirt underneath) outside the base footprint
 		for (int dx = -SURROUNDINGS_RADIUS; dx <= SURROUNDINGS_RADIUS; dx++) {

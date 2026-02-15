@@ -2,6 +2,7 @@ package com.braincraft.base;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -10,13 +11,21 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * Registers base-related gameplay: unbreakable base region, respawn at base, "Your base" action bar.
+ * Registers base-related gameplay: unbreakable base region, respawn at base, "Your base" action bar, no mob spawning.
  */
 public final class BaseGameplay {
 
 	private static final int ACTION_BAR_INTERVAL_TICKS = 40; // every 2 seconds
 
 	public static void register() {
+		// No mobs anywhere: disable natural mob spawning in every world
+		ServerWorldEvents.LOAD.register((server, level) -> {
+			server.getCommands().performPrefixedCommand(
+				server.createCommandSourceStack().withLevel(level),
+				"gamerule doMobSpawning false"
+			);
+		});
+
 		// Cancel block break inside any base region
 		PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
 			if (world.isClientSide()) return true;
