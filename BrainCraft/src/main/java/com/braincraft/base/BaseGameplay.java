@@ -1,9 +1,11 @@
 package com.braincraft.base;
 
+import com.braincraft.command.BrainCraftCommands;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -11,13 +13,22 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * Registers base-related gameplay: unbreakable base region, respawn at base, "Your base" action bar, no mob spawning.
+ * Registers base-related gameplay: unbreakable base region, respawn at base, "Your base" action bar, no mob spawning, auto-spawn base on join.
  */
 public final class BaseGameplay {
 
 	private static final int ACTION_BAR_INTERVAL_TICKS = 40; // every 2 seconds
 
 	public static void register() {
+		// Automatically create base at spawn when player joins and has no base
+		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+			ServerPlayer player = handler.player;
+			if (BaseManager.getBase(player.getUUID()) != null) return;
+			if (!(player.level() instanceof ServerLevel)) return;
+			BrainCraftCommands.setBaseAt(player, player.blockPosition());
+			player.sendSystemMessage(Component.literal("Your base has been created. Build with the blocks in your inventory."));
+		});
+
 		// No mobs anywhere: disable natural mob spawning in every world
 		ServerWorldEvents.LOAD.register((server, level) -> {
 			server.getCommands().performPrefixedCommand(

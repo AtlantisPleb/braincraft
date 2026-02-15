@@ -39,17 +39,11 @@ public final class BrainCraftCommands {
 		});
 	}
 
-	private static int baseSet(CommandContext<CommandSourceStack> context) {
-		CommandSourceStack source = context.getSource();
-		if (!(source.getEntity() instanceof ServerPlayer player)) {
-			return 0;
-		}
-		if (!(player.level() instanceof ServerLevel level)) {
-			return 0;
-		}
-		BlockPos center = player.blockPosition();
+	/** Builds and registers the player's base at the given center; gives starter blocks. Used by command and auto-spawn. */
+	public static void setBaseAt(ServerPlayer player, BlockPos center) {
+		if (!(player.level() instanceof ServerLevel level)) return;
 		int floorY = center.getY() - 1;
-		int roofY = center.getY() + 3; // floor + 3 blocks air + roof
+		int roofY = center.getY() + 3;
 		PlayerBase base = new PlayerBase(
 			player.getUUID(),
 			center,
@@ -61,6 +55,18 @@ public final class BrainCraftCommands {
 		BaseBuilder.build(level, center, BASE_RADIUS);
 		BaseManager.setBase(player.getUUID(), base);
 		giveStarterBlocks(player);
+	}
+
+	private static int baseSet(CommandContext<CommandSourceStack> context) {
+		CommandSourceStack source = context.getSource();
+		if (!(source.getEntity() instanceof ServerPlayer player)) {
+			return 0;
+		}
+		if (!(player.level() instanceof ServerLevel)) {
+			return 0;
+		}
+		BlockPos center = player.blockPosition();
+		setBaseAt(player, center);
 		source.sendSuccess(() -> Component.literal("Base built at " + center.getX() + ", " + center.getY() + ", " + center.getZ() + " (stone room + grass surroundings). You have blocks and torches to build with."), false);
 		return 1;
 	}
